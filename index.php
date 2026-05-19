@@ -19,8 +19,8 @@
                             <h5 class="card-title">Company Details (Sender)</h5>
                             <p class="card-text mb-0">
                                 <strong>NETVORA STUDIO</strong><br>
-                                 202603133337<br>
-                                16, Jalan Ida 1B, 47000 Sungai Buloh, Selangor
+                                SSM: AS0515392-M<br>
+                                4238 JALAN UDANG GALAH 1, TAMAN SERI SEGAMBUT, 52000 KUALA LUMPUR, WILAYAH PERSEKUTUAN
                             </p>
                             <small class="text-muted">* These details are fixed and will appear on the final invoice.</small>
                         </div>
@@ -61,8 +61,8 @@
                         <tr>
                             <th>Description</th>
                             <th style="width: 150px;">Quantity</th>
-                            <th style="width: 150px;">Unit Price</th>
-                            <th style="width: 150px;">Total</th>
+                            <th style="width: 150px;">Unit Price (RM)</th>
+                            <th style="width: 150px;">Total (RM)</th>
                             <th style="width: 50px;">Action</th>
                         </tr>
                     </thead>
@@ -82,7 +82,7 @@
             <div class="row justify-content-end">
                 <div class="col-md-4">
                     <div class="mb-3 row">
-                        <label class="col-sm-6 col-form-label">Subtotal</label>
+                        <label class="col-sm-6 col-form-label">Subtotal (RM)</label>
                         <div class="col-sm-6">
                             <input type="number" class="form-control" id="subtotal" name="subtotal" readonly>
                         </div>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label class="col-sm-6 col-form-label fw-bold">Grand Total</label>
+                        <label class="col-sm-6 col-form-label fw-bold">Grand Total (RM)</label>
                         <div class="col-sm-6">
                             <input type="number" class="form-control fw-bold" id="grand_total" name="grand_total" readonly>
                         </div>
@@ -112,8 +112,6 @@
                 <button type="submit" class="btn btn-success btn-lg">Generate Invoice</button>
             </div>
         </form>
-                *Make sure payment within 10 days*
-                Bank Acc: 564584401054 (Maybank)
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

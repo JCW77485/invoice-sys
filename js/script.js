@@ -115,13 +115,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     descCell.textContent = desc;
 
                     const qtyCell = document.createElement('td');
+                    qtyCell.className = 'text-center';
                     qtyCell.textContent = qty;
 
                     const priceCell = document.createElement('td');
-                    priceCell.textContent = '$' + parseFloat(price).toFixed(2);
+                    priceCell.className = 'text-end';
+                    priceCell.textContent = parseFloat(price).toFixed(2);
 
                     const totalCell = document.createElement('td');
-                    totalCell.textContent = '$' + parseFloat(total).toFixed(2);
+                    totalCell.className = 'text-end';
+                    totalCell.textContent = parseFloat(total).toFixed(2);
 
                     tr.appendChild(descCell);
                     tr.appendChild(qtyCell);

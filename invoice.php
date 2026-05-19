@@ -37,13 +37,13 @@ $grand_total = $subtotal + $tax_amount;
         .invoice-box {
             max-width: 800px;
             margin: auto;
-            padding: 30px;
+            padding: 40px;
             border: 1px solid #eee;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-            font-size: 16px;
-            line-height: 24px;
+            font-size: 14px;
+            line-height: 20px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-            color: #555;
+            color: #333;
         }
         @media print {
             .no-print {
@@ -81,8 +81,11 @@ $grand_total = $subtotal + $tax_amount;
                     <h5>From:</h5>
                     <p>
                         <strong>NETVORA STUDIO</strong><br>
-                        202603133337<br>
-                        416, Jalan Ida 1B, 47000 Sungai Buloh, Selangor
+                        SSM: AS0515392-M<br>
+                        4238 JALAN UDANG GALAH 1<br>
+                        TAMAN SERI SEGAMBUT<br>
+                        52000 KUALA LUMPUR<br>
+                        WILAYAH PERSEKUTUAN
                     </p>
                 </div>
                 <div class="col-6 text-end">
@@ -99,42 +102,51 @@ $grand_total = $subtotal + $tax_amount;
                 <thead>
                     <tr>
                         <th>Description</th>
-                        <th>Quantity</th>
-                        <th>Unit Price</th>
-                        <th>Total</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-end">Unit Price (RM)</th>
+                        <th class="text-end">Amount (RM)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($items as $item): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($item['description']); ?></td>
-                            <td><?php echo htmlspecialchars($item['quantity']); ?></td>
-                            <td>RM<?php echo number_format((float)$item['unit_price'], 2); ?></td>
-                            <td>RM<?php echo number_format((float)$item['total'], 2); ?></td>
+                            <td class="text-center"><?php echo htmlspecialchars($item['quantity']); ?></td>
+                            <td class="text-end"><?php echo number_format((float)$item['unit_price'], 2); ?></td>
+                            <td class="text-end"><?php echo number_format((float)$item['total'], 2); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
 
-            <div class="row justify-content-end">
-                <div class="col-4">
-                    <table class="table table-borderless">
+            <div class="row justify-content-end mb-5">
+                <div class="col-5">
+                    <table class="table table-sm table-borderless">
                         <tr>
-                            <td><strong>Subtotal:</strong></td>
-                            <td class="text-end">RM<?php echo number_format($subtotal, 2); ?></td>
+                            <td>Subtotal</td>
+                            <td class="text-end">RM <?php echo number_format($subtotal, 2); ?></td>
                         </tr>
                         <tr>
-                            <td><strong>Tax (<?php echo htmlspecialchars((string)$tax_rate); ?>%):</strong></td>
-                            <td class="text-end">RM<?php echo number_format($tax_amount, 2); ?></td>
+                            <td>Tax (<?php echo htmlspecialchars((string)$tax_rate); ?>%)</td>
+                            <td class="text-end">RM <?php echo number_format($tax_amount, 2); ?></td>
                         </tr>
-                        <tr>
-                            <td><strong>Grand Total:</strong></td>
-                            <td class="text-end"><strong>RM<?php echo number_format($grand_total, 2); ?></strong></td>
+                        <tr class="border-top border-dark">
+                            <td><strong>Total Amount</strong></td>
+                            <td class="text-end"><strong>RM <?php echo number_format($grand_total, 2); ?></strong></td>
                         </tr>
                     </table>
                 </div>
-                *Make sure payment within 10 days*
-                Bank Acc: 564584401054 (Maybank)
+            </div>
+
+            <div class="payment-info mt-5 pt-4 border-top">
+                <p class="mb-1"><strong>Payment Instructions:</strong></p>
+                <p class="mb-0 text-dark">Make sure payment within 10 days</p>
+                <p class="mb-0 text-dark">Bank Acc: <strong>114245271127</strong> (Maybank)</p>
+                <p class="mb-0 text-dark">Account Holder: <strong>Lai Kok Chong</strong></p>
+            </div>
+
+            <div class="mt-5 text-center text-muted">
+                <small>Thank you for your business!</small>
             </div>
         </div>
     </div>

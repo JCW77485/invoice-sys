@@ -13,6 +13,19 @@
         <h4 class="text-center text-muted mb-4">Invoice Generator</h4>
         <form action="invoice.php" method="POST" id="invoice-form">
             <div class="row mb-4">
+                <div class="col-12 mb-4">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Company Details (Sender)</h5>
+                            <p class="card-text mb-0">
+                                <strong>NETVORA STUDIO</strong><br>
+                                SSM: AS0515392-M<br>
+                                4238 JALAN UDANG GALAH 1, TAMAN SERI SEGAMBUT, 52000 KUALA LUMPUR, WILAYAH PERSEKUTUAN
+                            </p>
+                            <small class="text-muted">* These details are fixed and will appear on the final invoice.</small>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <h3>Customer Details</h3>
                     <div class="mb-3">

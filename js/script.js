@@ -21,6 +21,19 @@ document.addEventListener('DOMContentLoaded', function() {
         dateInput.value = today;
     }
 
+    // Set default invoice number for index.html if empty
+    const invoiceNumInput = document.getElementById('invoice_number');
+    if (invoiceNumInput && !invoiceNumInput.value) {
+        const now = new Date();
+        const timestamp = now.getFullYear() +
+            String(now.getMonth() + 1).padStart(2, '0') +
+            String(now.getDate()).padStart(2, '0') +
+            String(now.getHours()).padStart(2, '0') +
+            String(now.getMinutes()).padStart(2, '0') +
+            String(now.getSeconds()).padStart(2, '0');
+        invoiceNumInput.value = 'INV-' + timestamp;
+    }
+
     function calculateTotals() {
         let subtotal = 0;
         const rows = itemsBody.querySelectorAll('tr');

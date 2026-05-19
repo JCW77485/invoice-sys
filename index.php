@@ -17,22 +17,22 @@
                     <h3>Customer Details</h3>
                     <div class="mb-3">
                         <label for="customer_name" class="form-label">Customer Name</label>
-                        <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+                        <input type="text" class="form-control" id="customer_name" name="customer_name" value="Walk-in Customer" required>
                     </div>
                     <div class="mb-3">
                         <label for="customer_address" class="form-label">Customer Address</label>
-                        <textarea class="form-control" id="customer_address" name="customer_address" rows="3" required></textarea>
+                        <textarea class="form-control" id="customer_address" name="customer_address" rows="3" required>-</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="customer_email" class="form-label">Customer Email</label>
-                        <input type="email" class="form-control" id="customer_email" name="customer_email" required>
+                        <input type="email" class="form-control" id="customer_email" name="customer_email" value="customer@example.com" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <h3>Invoice Details</h3>
                     <div class="mb-3">
                         <label for="invoice_number" class="form-label">Invoice Number</label>
-                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" required>
+                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="INV-<?php echo date('YmdHis'); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="invoice_date" class="form-label">Date</label>
@@ -55,9 +55,9 @@
                     </thead>
                     <tbody id="items-body">
                         <tr>
-                            <td><input type="text" class="form-control" name="items[0][description]" required></td>
+                            <td><input type="text" class="form-control" name="items[0][description]" value="Product/Service Description" required></td>
                             <td><input type="number" class="form-control quantity" name="items[0][quantity]" min="1" step="any" value="1" required></td>
-                            <td><input type="number" class="form-control unit_price" name="items[0][unit_price]" min="0" step="0.01" value="0.00" required></td>
+                            <td><input type="number" class="form-control unit_price" name="items[0][unit_price]" min="0" step="0.01" value="10.00" required></td>
                             <td><input type="number" class="form-control row-total" name="items[0][total]" readonly></td>
                             <td><button type="button" class="btn btn-danger btn-sm remove-row">Delete</button></td>
                         </tr>

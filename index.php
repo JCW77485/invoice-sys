@@ -112,6 +112,8 @@
                 <button type="submit" class="btn btn-success btn-lg">Generate Invoice</button>
             </div>
         </form>
+                *Make sure payment within 10 days*
+                Bank Acc: 564584401054 (Maybank)
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

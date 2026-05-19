@@ -24,14 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set default invoice number for index.html if empty
     const invoiceNumInput = document.getElementById('invoice_number');
     if (invoiceNumInput && !invoiceNumInput.value) {
-        const now = new Date();
-        const timestamp = now.getFullYear() +
-            String(now.getMonth() + 1).padStart(2, '0') +
-            String(now.getDate()).padStart(2, '0') +
-            String(now.getHours()).padStart(2, '0') +
-            String(now.getMinutes()).padStart(2, '0') +
-            String(now.getSeconds()).padStart(2, '0');
-        invoiceNumInput.value = 'INV-' + timestamp;
+        const randomNum = Math.floor(100000 + Math.random() * 900000);
+        invoiceNumInput.value = 'INV-' + randomNum;
     }
 
     function calculateTotals() {

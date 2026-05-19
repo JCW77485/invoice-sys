@@ -45,7 +45,7 @@
                     <h3>Invoice Details</h3>
                     <div class="mb-3">
                         <label for="invoice_number" class="form-label">Invoice Number</label>
-                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="INV-<?php echo date('YmdHis'); ?>" required>
+                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="INV-<?php echo rand(100000, 999999); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="invoice_date" class="form-label">Date</label>

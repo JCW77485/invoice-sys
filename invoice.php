@@ -134,7 +134,7 @@ $grand_total = $subtotal + $tax_amount;
                     </table>
                 </div>
                 *Make sure payment within 10 days*
-                Bank Acc: 114245271127 (Maybank)
+                Bank Acc: 564584401054 (Maybank)
             </div>
         </div>
     </div>

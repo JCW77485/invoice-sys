@@ -109,8 +109,8 @@ $grand_total = $subtotal + $tax_amount;
                         <tr>
                             <td><?php echo htmlspecialchars($item['description']); ?></td>
                             <td><?php echo htmlspecialchars($item['quantity']); ?></td>
-                            <td>$<?php echo number_format((float)$item['unit_price'], 2); ?></td>
-                            <td>$<?php echo number_format((float)$item['total'], 2); ?></td>
+                            <td>RM<?php echo number_format((float)$item['unit_price'], 2); ?></td>
+                            <td>RM<?php echo number_format((float)$item['total'], 2); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -121,15 +121,15 @@ $grand_total = $subtotal + $tax_amount;
                     <table class="table table-borderless">
                         <tr>
                             <td><strong>Subtotal:</strong></td>
-                            <td class="text-end">$<?php echo number_format($subtotal, 2); ?></td>
+                            <td class="text-end">RM<?php echo number_format($subtotal, 2); ?></td>
                         </tr>
                         <tr>
                             <td><strong>Tax (<?php echo htmlspecialchars((string)$tax_rate); ?>%):</strong></td>
-                            <td class="text-end">$<?php echo number_format($tax_amount, 2); ?></td>
+                            <td class="text-end">RM<?php echo number_format($tax_amount, 2); ?></td>
                         </tr>
                         <tr>
                             <td><strong>Grand Total:</strong></td>
-                            <td class="text-end"><strong>$<?php echo number_format($grand_total, 2); ?></strong></td>
+                            <td class="text-end"><strong>RM<?php echo number_format($grand_total, 2); ?></strong></td>
                         </tr>
                     </table>
                 </div>

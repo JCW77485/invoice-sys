@@ -1,0 +1,38 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1, h3 {
+    color: #333;
+}
+
+.table th {
+    background-color: #f1f3f5;
+}
+
+.remove-row {
+    margin-top: 5px;
+}
+
+#add-item {
+    margin-top: 10px;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+@media print {
+    .container {
+        box-shadow: none;
+        padding: 0;
+    }
+}

@@ -6,9 +6,18 @@ A simple, dynamic invoice generation system built with pure HTML, PHP, CSS, Boot
 
 - **Dynamic Items:** Add or remove invoice line items on the fly.
 - **Real-time Calculation:** Subtotal, tax, and grand total are calculated instantly in the browser.
-- **Server-side Validation:** Totals are recalculated on the server for data integrity.
+- **Server-side Validation (PHP):** Totals are recalculated on the server for data integrity when using the PHP version.
 - **Print-ready:** Clean and professional invoice layout optimized for printing.
 - **Bootstrap UI:** Responsive design using Bootstrap 5.
+
+## Versions
+
+### 1. Static Version (`index.html`)
+Ideal for static hosting like GitHub Pages. It uses pure JavaScript to generate the invoice view within the same page.
+- **Live Demo:** [https://jcw77485.github.io/invoice-sys/index.html](https://jcw77485.github.io/invoice-sys/index.html)
+
+### 2. PHP Version (`index.php`)
+Uses PHP for server-side processing and recalculation of totals. Requires a server with PHP support.
 
 ## How to Run Locally
 
@@ -19,22 +28,18 @@ A simple, dynamic invoice generation system built with pure HTML, PHP, CSS, Boot
    ```bash
    php -S localhost:8000
    ```
-5. Open your browser and go to `http://localhost:8000`.
+5. Open your browser and go to `http://localhost:8000/index.php` (for PHP) or `http://localhost:8000/index.html` (for Static).
 
 ## Deployment
 
-Since this is a pure PHP application, it can be deployed to any web server that supports PHP (like Apache or Nginx).
+### Static Deployment (GitHub Pages, Vercel, etc.)
+Simply upload all files. `index.html` will be the entry point.
 
-### Basic Deployment Steps:
+### PHP Deployment (Apache, Nginx, etc.)
+1. Upload all files to your server's web root.
+2. Access `index.php` via your domain.
 
-1. Upload all files (`index.php`, `invoice.php`, `css/`, `js/`) to your server's web root (e.g., `public_html`).
-2. Ensure the web server has permissions to read the files.
-3. Access the application via your domain name.
-
-### Docker Deployment (Optional):
-
-You can also use a simple Docker setup with an official PHP-Apache image:
-
+### Docker Deployment
 1. Create a `Dockerfile`:
    ```dockerfile
    FROM php:8.2-apache

@@ -5,6 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const taxRateInput = document.getElementById('tax_rate');
     const taxAmountInput = document.getElementById('tax_amount');
     const grandTotalInput = document.getElementById('grand_total');
+    const invoiceForm = document.getElementById('invoice-form');
+
+    // Elements for static display (index.html)
+    const generatorView = document.getElementById('generator-view');
+    const invoiceView = document.getElementById('invoice-view');
+    const backToGeneratorBtn = document.getElementById('back-to-generator');
+
     let rowCount = 1;
 
     function calculateTotals() {
@@ -28,35 +35,99 @@ document.addEventListener('DOMContentLoaded', function() {
         grandTotalInput.value = grandTotal.toFixed(2);
     }
 
-    addItemBtn.addEventListener('click', function() {
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td><input type="text" class="form-control" name="items[${rowCount}][description]" required></td>
-            <td><input type="number" class="form-control quantity" name="items[${rowCount}][quantity]" min="1" step="any" value="1" required></td>
-            <td><input type="number" class="form-control unit_price" name="items[${rowCount}][unit_price]" min="0" step="0.01" value="0.00" required></td>
-            <td><input type="number" class="form-control row-total" name="items[${rowCount}][total]" readonly></td>
-            <td><button type="button" class="btn btn-danger btn-sm remove-row">Delete</button></td>
-        `;
-        itemsBody.appendChild(newRow);
-        rowCount++;
-        calculateTotals();
-    });
-
-    itemsBody.addEventListener('click', function(e) {
-        if (e.target.classList.contains('remove-row')) {
-            e.target.closest('tr').remove();
+    if (addItemBtn) {
+        addItemBtn.addEventListener('click', function() {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="form-control" name="items[${rowCount}][description]" required></td>
+                <td><input type="number" class="form-control quantity" name="items[${rowCount}][quantity]" min="1" step="any" value="1" required></td>
+                <td><input type="number" class="form-control unit_price" name="items[${rowCount}][unit_price]" min="0" step="0.01" value="0.00" required></td>
+                <td><input type="number" class="form-control row-total" name="items[${rowCount}][total]" readonly></td>
+                <td><button type="button" class="btn btn-danger btn-sm remove-row">Delete</button></td>
+            `;
+            itemsBody.appendChild(newRow);
+            rowCount++;
             calculateTotals();
-        }
-    });
+        });
+    }
 
-    itemsBody.addEventListener('input', function(e) {
-        if (e.target.classList.contains('quantity') || e.target.classList.contains('unit_price')) {
-            calculateTotals();
-        }
-    });
+    if (itemsBody) {
+        itemsBody.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-row')) {
+                e.target.closest('tr').remove();
+                calculateTotals();
+            }
+        });
 
-    taxRateInput.addEventListener('input', calculateTotals);
+        itemsBody.addEventListener('input', function(e) {
+            if (e.target.classList.contains('quantity') || e.target.classList.contains('unit_price')) {
+                calculateTotals();
+            }
+        });
+    }
+
+    if (taxRateInput) {
+        taxRateInput.addEventListener('input', calculateTotals);
+    }
+
+    // Handle form submission for static version
+    if (invoiceForm && invoiceView) {
+        invoiceForm.addEventListener('submit', function(e) {
+            // Check if we are on index.html or index.php
+            // index.php form has action="invoice.php"
+            if (!invoiceForm.hasAttribute('action')) {
+                e.preventDefault();
+
+                // Populate invoice view
+                document.getElementById('display_customer_name').textContent = document.getElementById('customer_name').value;
+                document.getElementById('display_customer_address').textContent = document.getElementById('customer_address').value;
+                document.getElementById('display_customer_email').textContent = document.getElementById('customer_email').value;
+                document.getElementById('display_invoice_number').textContent = document.getElementById('invoice_number').value;
+                document.getElementById('display_invoice_date').textContent = document.getElementById('invoice_date').value;
+
+                const itemsDisplay = document.getElementById('display_items');
+                itemsDisplay.innerHTML = '';
+
+                const rows = itemsBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const desc = row.querySelector('input[name*="[description]"]').value;
+                    const qty = row.querySelector('.quantity').value;
+                    const price = row.querySelector('.unit_price').value;
+                    const total = row.querySelector('.row-total').value;
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${desc}</td>
+                        <td>${qty}</td>
+                        <td>$${parseFloat(price).toFixed(2)}</td>
+                        <td>$${parseFloat(total).toFixed(2)}</td>
+                    `;
+                    itemsDisplay.appendChild(tr);
+                });
+
+                document.getElementById('display_subtotal').textContent = subtotalInput.value;
+                document.getElementById('display_tax_rate').textContent = taxRateInput.value;
+                document.getElementById('display_tax_amount').textContent = taxAmountInput.value;
+                document.getElementById('display_grand_total').textContent = grandTotalInput.value;
+
+                // Switch views
+                generatorView.style.display = 'none';
+                invoiceView.style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+        });
+    }
+
+    if (backToGeneratorBtn) {
+        backToGeneratorBtn.addEventListener('click', function() {
+            invoiceView.style.display = 'none';
+            generatorView.style.display = 'block';
+            window.scrollTo(0, 0);
+        });
+    }
 
     // Initial calculation
-    calculateTotals();
+    if (itemsBody) {
+        calculateTotals();
+    }
 });

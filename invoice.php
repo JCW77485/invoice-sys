@@ -81,11 +81,8 @@ $grand_total = $subtotal + $tax_amount;
                     <h5>From:</h5>
                     <p>
                         <strong>NETVORA STUDIO</strong><br>
-                        SSM: AS0515392-M<br>
-                        4238 JALAN UDANG GALAH 1<br>
-                        TAMAN SERI SEGAMBUT<br>
-                        52000 KUALA LUMPUR<br>
-                        WILAYAH PERSEKUTUAN
+                        202603133337<br>
+                        416, Jalan Ida 1B, 47000 Sungai Buloh, Selangor
                     </p>
                 </div>
                 <div class="col-6 text-end">
@@ -136,6 +133,8 @@ $grand_total = $subtotal + $tax_amount;
                         </tr>
                     </table>
                 </div>
+                *Make sure payment within 10 days*
+                Bank Acc: 114245271127 (Maybank)
             </div>
         </div>
     </div>

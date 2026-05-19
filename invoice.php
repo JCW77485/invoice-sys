@@ -80,10 +80,12 @@ $grand_total = $subtotal + $tax_amount;
                 <div class="col-6">
                     <h5>From:</h5>
                     <p>
-                        Your Company Name<br>
-                        123 Street Address<br>
-                        City, State, Zip<br>
-                        contact@yourcompany.com
+                        <strong>NETVORA STUDIO</strong><br>
+                        SSM: AS0515392-M<br>
+                        4238 JALAN UDANG GALAH 1<br>
+                        TAMAN SERI SEGAMBUT<br>
+                        52000 KUALA LUMPUR<br>
+                        WILAYAH PERSEKUTUAN
                     </p>
                 </div>
                 <div class="col-6 text-end">

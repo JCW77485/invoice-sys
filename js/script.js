@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let rowCount = 1;
 
+    // Set today's date as default
+    const dateInput = document.getElementById('invoice_date');
+    if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.value = today;
+    }
+
     function calculateTotals() {
         let subtotal = 0;
         const rows = itemsBody.querySelectorAll('tr');
@@ -96,12 +103,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     const total = row.querySelector('.row-total').value;
 
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${desc}</td>
-                        <td>${qty}</td>
-                        <td>$${parseFloat(price).toFixed(2)}</td>
-                        <td>$${parseFloat(total).toFixed(2)}</td>
-                    `;
+
+                    const descCell = document.createElement('td');
+                    descCell.textContent = desc;
+
+                    const qtyCell = document.createElement('td');
+                    qtyCell.textContent = qty;
+
+                    const priceCell = document.createElement('td');
+                    priceCell.textContent = '$' + parseFloat(price).toFixed(2);
+
+                    const totalCell = document.createElement('td');
+                    totalCell.textContent = '$' + parseFloat(total).toFixed(2);
+
+                    tr.appendChild(descCell);
+                    tr.appendChild(qtyCell);
+                    tr.appendChild(priceCell);
+                    tr.appendChild(totalCell);
+
                     itemsDisplay.appendChild(tr);
                 });
 

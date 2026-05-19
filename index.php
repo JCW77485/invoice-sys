@@ -9,7 +9,8 @@
 </head>
 <body>
     <div class="container my-5">
-        <h1 class="text-center mb-4">Invoice Generator</h1>
+        <h1 class="text-center mb-4">NETVORA STUDIO</h1>
+        <h4 class="text-center text-muted mb-4">Invoice Generator</h4>
         <form action="invoice.php" method="POST" id="invoice-form">
             <div class="row mb-4">
                 <div class="col-md-6">

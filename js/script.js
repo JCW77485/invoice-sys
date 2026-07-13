@@ -7,21 +7,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const grandTotalInput = document.getElementById('grand_total');
     const invoiceForm = document.getElementById('invoice-form');
 
-    // Elements for static display (index.html)
-    const generatorView = document.getElementById('generator-view');
-    const invoiceView = document.getElementById('invoice-view');
-    const backToGeneratorBtn = document.getElementById('back-to-generator');
+    // Get number of existing rows to set initial rowCount correctly
+    let rowCount = itemsBody ? itemsBody.querySelectorAll('tr').length : 1;
 
-    let rowCount = 1;
-
-    // Set today's date as default
+    // Set today's date as default if empty
     const dateInput = document.getElementById('invoice_date');
-    if (dateInput) {
+    if (dateInput && !dateInput.value) {
         const today = new Date().toISOString().split('T')[0];
         dateInput.value = today;
     }
 
-    // Set default invoice number for index.html if empty
+    // Set default invoice number if empty
     const invoiceNumInput = document.getElementById('invoice_number');
     if (invoiceNumInput && !invoiceNumInput.value) {
         const randomNum = Math.floor(100000 + Math.random() * 900000);
@@ -29,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function calculateTotals() {
+        if (!itemsBody) return;
         let subtotal = 0;
         const rows = itemsBody.querySelectorAll('tr');
 
@@ -54,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
                 <td><input type="text" class="form-control" name="items[${rowCount}][description]" required></td>
-                <td><input type="number" class="form-control quantity" name="items[${rowCount}][quantity]" min="1" step="any" value="1" required></td>
-                <td><input type="number" class="form-control unit_price" name="items[${rowCount}][unit_price]" min="0" step="0.01" value="0.00" required></td>
+                <td><input type="number" class="form-control quantity" name="items[${rowCount}][quantity]" step="any" value="1" required></td>
+                <td><input type="number" class="form-control unit_price" name="items[${rowCount}][unit_price]" step="0.01" value="0.00" required></td>
                 <td><input type="number" class="form-control row-total" name="items[${rowCount}][total]" readonly></td>
                 <td><button type="button" class="btn btn-danger btn-sm remove-row">Delete</button></td>
             `;
@@ -84,74 +81,20 @@ document.addEventListener('DOMContentLoaded', function() {
         taxRateInput.addEventListener('input', calculateTotals);
     }
 
-    // Handle form submission for static version
-    if (invoiceForm && invoiceView) {
-        invoiceForm.addEventListener('submit', function(e) {
-            // Check if we are on index.html or index.php
-            // index.php form has action="invoice.php"
-            if (!invoiceForm.hasAttribute('action')) {
-                e.preventDefault();
+    // Handle draft status setting on click
+    const btnSaveDraft = document.getElementById('btn-save-draft');
+    const btnGenerateInvoice = document.getElementById('btn-generate-invoice');
+    const statusInput = document.getElementById('invoice-status');
 
-                // Populate invoice view
-                document.getElementById('display_customer_name').textContent = document.getElementById('customer_name').value;
-                document.getElementById('display_customer_address').textContent = document.getElementById('customer_address').value;
-                document.getElementById('display_customer_email').textContent = document.getElementById('customer_email').value;
-                document.getElementById('display_invoice_number').textContent = document.getElementById('invoice_number').value;
-                document.getElementById('display_invoice_date').textContent = document.getElementById('invoice_date').value;
-
-                const itemsDisplay = document.getElementById('display_items');
-                itemsDisplay.innerHTML = '';
-
-                const rows = itemsBody.querySelectorAll('tr');
-                rows.forEach(row => {
-                    const desc = row.querySelector('input[name*="[description]"]').value;
-                    const qty = row.querySelector('.quantity').value;
-                    const price = row.querySelector('.unit_price').value;
-                    const total = row.querySelector('.row-total').value;
-
-                    const tr = document.createElement('tr');
-
-                    const descCell = document.createElement('td');
-                    descCell.textContent = desc;
-
-                    const qtyCell = document.createElement('td');
-                    qtyCell.className = 'text-center';
-                    qtyCell.textContent = qty;
-
-                    const priceCell = document.createElement('td');
-                    priceCell.className = 'text-end';
-                    priceCell.textContent = parseFloat(price).toFixed(2);
-
-                    const totalCell = document.createElement('td');
-                    totalCell.className = 'text-end';
-                    totalCell.textContent = parseFloat(total).toFixed(2);
-
-                    tr.appendChild(descCell);
-                    tr.appendChild(qtyCell);
-                    tr.appendChild(priceCell);
-                    tr.appendChild(totalCell);
-
-                    itemsDisplay.appendChild(tr);
-                });
-
-                document.getElementById('display_subtotal').textContent = subtotalInput.value;
-                document.getElementById('display_tax_rate').textContent = taxRateInput.value;
-                document.getElementById('display_tax_amount').textContent = taxAmountInput.value;
-                document.getElementById('display_grand_total').textContent = grandTotalInput.value;
-
-                // Switch views
-                generatorView.style.display = 'none';
-                invoiceView.style.display = 'block';
-                window.scrollTo(0, 0);
-            }
+    if (btnSaveDraft && statusInput) {
+        btnSaveDraft.addEventListener('click', function() {
+            statusInput.value = 'draft';
         });
     }
 
-    if (backToGeneratorBtn) {
-        backToGeneratorBtn.addEventListener('click', function() {
-            invoiceView.style.display = 'none';
-            generatorView.style.display = 'block';
-            window.scrollTo(0, 0);
+    if (btnGenerateInvoice && statusInput) {
+        btnGenerateInvoice.addEventListener('click', function() {
+            statusInput.value = 'final';
         });
     }
 

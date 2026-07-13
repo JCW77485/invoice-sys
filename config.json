@@ -1,0 +1,9 @@
+{
+    "company_name": "ACME ROCKETS",
+    "ssm": "SSM-987654-A",
+    "address": "789 Outer Space Avenue, Orbit",
+    "payment_instructions": "Deliver rocket fuel within 5 days",
+    "bank_name": "Rocket Bank",
+    "bank_acc": "123-456-789-0",
+    "account_holder": "Acme Corp"
+}

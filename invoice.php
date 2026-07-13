@@ -1,37 +1,46 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: index.php');
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/config.php';
+
+$invoice_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+if ($invoice_id <= 0) {
+    header('Location: invoices.php');
     exit;
 }
 
-$customer_name = $_POST['customer_name'] ?? '';
-$customer_address = $_POST['customer_address'] ?? '';
-$customer_email = $_POST['customer_email'] ?? '';
-$invoice_number = $_POST['invoice_number'] ?? '';
-$invoice_date = $_POST['invoice_date'] ?? '';
-$items = $_POST['items'] ?? [];
-$tax_rate = (float)($_POST['tax_rate'] ?? 0);
+$db = get_db();
+$config = get_config();
 
-// Recalculate on server side for security
-$subtotal = 0;
-foreach ($items as $key => $item) {
-    $qty = (float)($item['quantity'] ?? 0);
-    $price = (float)($item['unit_price'] ?? 0);
-    $item_total = $qty * $price;
-    $items[$key]['total'] = $item_total;
-    $subtotal += $item_total;
+try {
+    // Fetch invoice details
+    $stmt = $db->prepare("SELECT * FROM invoices WHERE id = ?");
+    $stmt->execute([$invoice_id]);
+    $invoice = $stmt->fetch();
+
+    if (!$invoice) {
+        die("Invoice not found.");
+    }
+
+    // Fetch items
+    $stmt_items = $db->prepare("SELECT * FROM invoice_items WHERE invoice_id = ?");
+    $stmt_items->execute([$invoice_id]);
+    $items = $stmt_items->fetchAll();
+
+} catch (Exception $e) {
+    die("Error: " . $e->getMessage());
 }
 
-$tax_amount = $subtotal * ($tax_rate / 100);
-$grand_total = $subtotal + $tax_amount;
+$subtotal = (float)$invoice['subtotal'];
+$tax_rate = (float)$invoice['tax_rate'];
+$tax_amount = (float)$invoice['tax_amount'];
+$grand_total = (float)$invoice['grand_total'];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice - <?php echo htmlspecialchars($invoice_number); ?></title>
+    <title>Invoice - <?php echo htmlspecialchars($invoice['invoice_number']); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .invoice-box {
@@ -60,7 +69,8 @@ $grand_total = $subtotal + $tax_amount;
     <div class="container my-5">
         <div class="text-center mb-4 no-print">
             <button onclick="window.print()" class="btn btn-primary">Print Invoice</button>
-            <a href="index.php" class="btn btn-secondary">Back to Generator</a>
+            <a href="invoices.php" class="btn btn-secondary">Invoices List</a>
+            <a href="index.php" class="btn btn-success">Create New</a>
         </div>
 
         <div class="invoice-box">
@@ -70,8 +80,8 @@ $grand_total = $subtotal + $tax_amount;
                 </div>
                 <div class="col-6 text-end">
                     <p>
-                        Invoice #: <?php echo htmlspecialchars($invoice_number); ?><br>
-                        Created: <?php echo htmlspecialchars($invoice_date); ?>
+                        Invoice #: <?php echo htmlspecialchars($invoice['invoice_number']); ?><br>
+                        Created: <?php echo htmlspecialchars($invoice['invoice_date']); ?>
                     </p>
                 </div>
             </div>
@@ -80,20 +90,17 @@ $grand_total = $subtotal + $tax_amount;
                 <div class="col-6">
                     <h5>From:</h5>
                     <p>
-                        <strong>NETVORA STUDIO</strong><br>
-                        SSM: AS0515392-M<br>
-                        4238 JALAN UDANG GALAH 1<br>
-                        TAMAN SERI SEGAMBUT<br>
-                        52000 KUALA LUMPUR<br>
-                        WILAYAH PERSEKUTUAN
+                        <strong><?php echo htmlspecialchars($config['company_name']); ?></strong><br>
+                        SSM: <?php echo htmlspecialchars($config['ssm']); ?><br>
+                        <?php echo nl2br(htmlspecialchars($config['address'])); ?>
                     </p>
                 </div>
                 <div class="col-6 text-end">
                     <h5>To:</h5>
                     <p>
-                        <?php echo htmlspecialchars($customer_name); ?><br>
-                        <?php echo nl2br(htmlspecialchars($customer_address)); ?><br>
-                        <?php echo htmlspecialchars($customer_email); ?>
+                        <?php echo htmlspecialchars($invoice['customer_name']); ?><br>
+                        <?php echo nl2br(htmlspecialchars($invoice['customer_address'])); ?><br>
+                        <?php echo htmlspecialchars($invoice['customer_email']); ?>
                     </p>
                 </div>
             </div>
@@ -140,9 +147,9 @@ $grand_total = $subtotal + $tax_amount;
 
             <div class="payment-info mt-5 pt-4 border-top">
                 <p class="mb-1"><strong>Payment Instructions:</strong></p>
-                <p class="mb-0 text-dark">Make sure payment within 10 days</p>
-                <p class="mb-0 text-dark">Bank Acc: <strong>564584401054</strong> (Maybank)</p>
-                <p class="mb-0 text-dark">Account Holder: <strong>Netvora</strong></p>
+                <p class="mb-0 text-dark"><?php echo htmlspecialchars($config['payment_instructions']); ?></p>
+                <p class="mb-0 text-dark">Bank Acc: <strong><?php echo htmlspecialchars($config['bank_acc']); ?></strong> (<?php echo htmlspecialchars($config['bank_name']); ?>)</p>
+                <p class="mb-0 text-dark">Account Holder: <strong><?php echo htmlspecialchars($config['account_holder']); ?></strong></p>
             </div>
 
             <div class="mt-5 text-center text-muted">

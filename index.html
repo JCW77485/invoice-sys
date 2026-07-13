@@ -4,19 +4,34 @@
     <meta charset="UTF-8">
     <title>Redirecting to Invoice System...</title>
     <script>
-        // Check the protocol of the current page
+        // Check the protocol of the current page first
         if (window.location.protocol === 'file:') {
-            // Opened locally (e.g. by double-clicking index.html)
             window.location.href = "static.html";
         } else {
-            // Served over a web server (http:// or https://)
-            window.location.href = "index.php";
+            // We are on http/https. Let's check if the web server supports/executes PHP
+            // to avoid downloading raw index.php.
+            fetch("index.php")
+                .then(response => response.text())
+                .then(text => {
+                    if (text.includes("<?php") || text.includes("<?=")) {
+                        // The server sent the raw PHP code instead of executing it.
+                        // Redirect to the static HTML version.
+                        window.location.href = "static.html";
+                    } else {
+                        // The server successfully executed/processed PHP.
+                        window.location.href = "index.php";
+                    }
+                })
+                .catch(error => {
+                    // Fallback to static if check fails
+                    window.location.href = "static.html";
+                });
         }
     </script>
 </head>
 <body>
     <p>Redirecting you to the appropriate version of the Invoice System...</p>
-    <p>If you are served by a web server, you can go directly to <a href="index.php">index.php</a>.</p>
-    <p>If you are opening this file locally on your computer, please go to <a href="static.html">static.html</a>.</p>
+    <p>If you are served by a dynamic web server, you can go directly to <a href="index.php">index.php</a>.</p>
+    <p>If you are opening this file locally or using static hosting, please go to <a href="static.html">static.html</a>.</p>
 </body>
 </html>

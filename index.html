@@ -2,13 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.php">
     <title>Redirecting to Invoice System...</title>
     <script>
-        window.location.href = "index.php";
+        // Check the protocol of the current page
+        if (window.location.protocol === 'file:') {
+            // Opened locally (e.g. by double-clicking index.html)
+            window.location.href = "static.html";
+        } else {
+            // Served over a web server (http:// or https://)
+            window.location.href = "index.php";
+        }
     </script>
 </head>
 <body>
-    <p>If you are not redirected automatically, please follow this link to the <a href="index.php">Invoice System</a>.</p>
+    <p>Redirecting you to the appropriate version of the Invoice System...</p>
+    <p>If you are served by a web server, you can go directly to <a href="index.php">index.php</a>.</p>
+    <p>If you are opening this file locally on your computer, please go to <a href="static.html">static.html</a>.</p>
 </body>
 </html>
